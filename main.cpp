@@ -260,23 +260,21 @@ void move(Piece board[][8])
 		// Convert char letters into char numbers
 		fLet = convertLetter(fLet);
 		tLet = convertLetter(tLet);
-		
+
 		// Convert all char numbers into int numbers so the board index can read it
 		fl = convertNumber(fLet);
 		fn = convertNumberInverse(fNum);
 		tl = convertNumber(tLet);
 		tn = convertNumberInverse(tNum);
 
-		// Check to see if a piece specified by the user is able to move to the inputted coordinates 
-
-		// cout << fl << " " << fn << " " << tl << " " << tn << endl;board[fn][fl].canMove(fn, fl, tn, tl)
-		// cout << board[fn][fl].color << endl;
+		// Check to see if a piece specified by the user is able to move to the inputted coordinates
+		// by calling the canMove() function with the required coordinates on the board piece. 
+		//<<<<<<<<<<<<<<<<Current error>>>>>>>>>>>>>>>>>>>>>>>>>
 		// if (board[fn][fl].canMove(fn, fl, tn, tl))
 		// 	check = true;
 		// else
 		// 	cout << "\nError: Illegal move.";
-		cout << board[1][7].canMove(1, 2, 1, 4) << endl;
-		//board[1][7].setColor(1);
+		//<<<<<<<<<<<<<<<<Current error>>>>>>>>>>>>>>>>>>>>>>>>>
 	}
 
 	// Apply piece location change to the board while replacing the voided slot with the Space object

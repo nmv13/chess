@@ -16,6 +16,7 @@ class Piece
    protected:
       bool alive;                                // States whether object is alive
       bool first;                                // States whether it is that piece's first move
+      bool protect;                              // States whether piece is being protected by another piece
 
    public:
       Piece()
@@ -27,13 +28,14 @@ class Piece
       void setColor(int col);                    // Set piece color
       bool isAlive() { return alive; }           // Check to see if piece is alive
 
-      // This function checks where a given piece can move on a chess board in any situation. This 
+      // This function checks where a given piece can move on a chess board in general situations. This 
       // happens by reading in the coordinates of the piece. It does not matter where the piece is 
       // on the board at the time, this function only specifies if the move is allowed or not in general.
       // Other functions will take care of the rest of the work. Essentially, this function reads in 4 numbers 
       // and applies them as if they were on a graph, if the first two (x,y) numbers in relation to the second
-      // pair of (x,y) is a valid move from point 1 to point 2 according to the chess piece, then it returns true. 
-      int canMove(int a, int b, int c, int d);
+      // pair of (x,y) is a valid move from point 1 to point 2 according to the chess piece, and no additional 
+      // pieces are in the way of that path, then it returns true. 
+      int canMove(int a, int b, int c, int d, Piece board[][8]);      
 };
 
 /*************************************************************
@@ -54,20 +56,35 @@ class Pawn : public Piece
       }
 
       // This function establishes where a Pawn can move in general situations
-      int canMove(int a, int b, int c, int d) 
+      int canMove(int a, int b, int c, int d, Piece board[][8]) 
       {  
          // If it is this Pawn's first move of the game, it can move forward 2 squares
+         // After first move, first must equal false.
          if (a == c && (b + 2) == d)
+         {   
             if (first)
+            {
+               // Check first move forward to see if a piece is already there
+               if (board[a][b + 1].color != ' ')
+                  return false;
+               else
+               {
+                  first = false;
+                  return true;
+               }
+            }
+         }
+         // The Pawn can move forward 1 space
+         else if (a == c && (b + 1) == d)
+         {
+            // Check if another piece is there
+            if (board[a][b + 1].color != ' ')
+               return false;
+            else
             {
                first = false;
                return true;
             }
-         // The Pawn can move forward 1 space
-         else if (a == c && (b + 1) == d)
-         {
-            first = false;
-            return true;
          }
          // The Pawn can move one square forward and one square right
          else if ((a + 1) == c && (b + 1) == d)
@@ -104,14 +121,22 @@ class Rook : public Piece
       }
 
       // This function establishes where a Rook can move in general situations
-      int canMove(int a, int b, int c, int d) 
+      int canMove(int a, int b, int c, int d, Piece board[][8]) 
       {
          // The Rook can move vertically in either direction
          if (a == c && b != d)
+         {
+            // Check if there are any pieces between the Rook and it's destinatioin
+            /**/
             return true;
-         // The ROok can move horizontally in either direction
+         }
+         // The Rook can move horizontally in either direction
          else if (a != c && b == d)
+         {
+            // Check if there are any pieces between the Rook and it's destination
+            /**/
             return true;
+         }
          else
             return false;         
       }
@@ -135,25 +160,37 @@ class Knight : public Piece
       }
 
       // This function establishes where a Knight can move in general situations
-      int canMove(int a, int b, int c, int d) 
+      int canMove(int a, int b, int c, int d, Piece board[][8]) 
       {
          // The Knight can move forward two spaces and to the right or the left one space
          if ((a + 2) == c)
          {
             if ((b + 1) == d || (b - 1) == d)
+            {
+               // Check if there are any pieces between the Knight and it's destinatioin
+               /**/
                return true;
+            }
          }
          // The Knight can move backward two spaces and to the right or the left one space
          else if ((a - 2) == c)
          {
             if ((b + 2) == d || (b - 2) == d)
+            {
+               // Check if there are any pieces between the Knight and it's destinatioin
+               /**/
                return true;      
+            }
          }
          // The Knight can move forward or backward one space and to the left or right two spaces
          else if ((a + 1) == d || (a - 1) == d)
          {
             if ((b + 2) == d || (b - 2) == d)
+            {
+               // Check if there are any pieces between the Knight and it's destinatioin
+               /**/
                return true;
+            }
          }
          else 
             return false;
@@ -178,13 +215,21 @@ class Bishop : public Piece
       }
 
       // This function establishes where a Bishop can move in general situations
-      int canMove(int a, int b, int c, int d) 
+      int canMove(int a, int b, int c, int d, Piece board[][8]) 
       {
          // The Bishop can move diagonally in any direction
          if ((c - a) == (d - b))
+         {
+            // Check if there are any pieces between the Bishop and it's destinatioin
+            /**/
             return true;
+         }
          else if ((c + a) == (d + b))
+         {
+            // Check if there are any pieces between the Bishop and it's destinatioin
+            /**/
             return true;
+         }
          else
             return false;
       }
@@ -208,20 +253,36 @@ class Queen : public Piece
       }
 
       // This function establishes where a Queen can move in any situation
-      int canMove(int a, int b, int c, int d) 
+      int canMove(int a, int b, int c, int d, Piece board[][8]) 
       {
          // The Queen can move disgonally left in either direction
          if ((c - a) == (d - b))
+         {
+            // Check if there are any pieces between the Queen and it's destinatioin
+            /**/
             return true;
+         }
          // The Queen can move disgonally right in either direction
          else if ((c + a) == (d + b))
+         {
+            // Check if there are any pieces between the Queen and it's destinatioin
+            /**/
             return true;
+         }
          // The Queen can move vertically in either direction
          else if (a == c && b != d)
+         {
+            // Check if there are any pieces between the Queen and it's destinatioin
+            /**/
             return true;
+         }
          // The Queen can move horizontally in either direction
          else if (a != c && b == d)
+         {
+            // Check if there are any pieces between the Queen and it's destinatioin
+            /**/
             return true;
+         }
          else
             return false;
       }
@@ -245,19 +306,23 @@ class King : public Piece
       }
 
       // This function establishes where a King can move in any situation
-      int canMove(int a, int b, int c, int d) 
+      int canMove(int a, int b, int c, int d, Piece board[][8]) 
       {
          // The King can move forward or backward one square in any direction
          if ((a + 1) == c || (a - 1) == c || a == c)
          {
             if ((b + 1) == d || (b - 1) == d)
+            {
                return true;
+            }
          }
          // The King can move one square to the right or left
          else if (b == d)
          {
             if ((a + 1) == c || (a - 1) == c)
+            {
                return true;
+            }
          }
          else
             return false;

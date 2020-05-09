@@ -250,8 +250,8 @@ void move(Piece board[][8])
 	Space e;
 
 	// Keep looping until user has entered a valid move
-	while (check != true)
-	{
+	// while (check != true)
+	// {
 		// Read in inputs from user in specified format (b2:b4) representing where a piece is 
 		// moving from, and where it is moving to.
 		cout << "\nEnter your move (b2:b4): ";
@@ -275,7 +275,7 @@ void move(Piece board[][8])
 		// else
 		// 	cout << "\nError: Illegal move.";
 		//<<<<<<<<<<<<<<<<Current error>>>>>>>>>>>>>>>>>>>>>>>>>
-	}
+	// }
 
 	// Apply piece location change to the board while replacing the voided slot with the Space object
 	board[tn][tl] = board[fn][fl];
@@ -292,6 +292,10 @@ void move(Piece board[][8])
  ************************************************************/
 char display(Piece board[][8])
 {
+
+	// Clear terminal for easier viewing
+	system("clear");
+
 	// Board compenents
 	string bs = "-";     // Boarder Start
 	string bb = "----";  // Boarder

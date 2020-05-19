@@ -7,6 +7,12 @@
 #include <iomanip>
 #include <iostream>
 #include "piece.h"
+#include "pawn.h"
+#include "bishop.h"
+#include "knight.h"
+#include "rook.h"
+#include "queen.h"
+#include "king.h"
 using namespace std;
 
 bool options(Piece board[][8]);
@@ -267,14 +273,20 @@ void move(Piece board[][8])
 		tl = convertNumber(tLet);
 		tn = convertNumberInverse(tNum);
 
+		cout << "fl = " << fl << endl;
+		cout << "fn = " << fn << endl;
+		cout << "tl = " << tl << endl;
+		cout << "tn = " << tn << endl;
+		cout << "board[" << fn << "][" << fl << "].color = " << board[fn][fl].color << endl;
+
 		// Check to see if a piece specified by the user is able to move to the inputted coordinates
 		// by calling the canMove() function with the required coordinates on the board piece. 
-		//<<<<<<<<<<<<<<<<Current error>>>>>>>>>>>>>>>>>>>>>>>>>
-		// if (board[fn][fl].canMove(fn, fl, tn, tl))
+		// <<<<<<<<<<<<<<<<Current error>>>>>>>>>>>>>>>>>>>>>>>>>
+		// if (board[fn][fl].canMove(fn, fl, tn, tl, board))
 		// 	check = true;
 		// else
 		// 	cout << "\nError: Illegal move.";
-		//<<<<<<<<<<<<<<<<Current error>>>>>>>>>>>>>>>>>>>>>>>>>
+		// <<<<<<<<<<<<<<<<Current error>>>>>>>>>>>>>>>>>>>>>>>>>
 	// }
 
 	// Apply piece location change to the board while replacing the voided slot with the Space object
@@ -294,7 +306,7 @@ char display(Piece board[][8])
 {
 
 	// Clear terminal for easier viewing
-	system("clear");
+	//system("clear");
 
 	// Board compenents
 	string bs = "-";     // Boarder Start

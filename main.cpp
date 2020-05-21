@@ -273,12 +273,6 @@ void move(Piece board[][8])
 		tl = convertNumber(tLet);
 		tn = convertNumberInverse(tNum);
 
-		cout << "fl = " << fl << endl;
-		cout << "fn = " << fn << endl;
-		cout << "tl = " << tl << endl;
-		cout << "tn = " << tn << endl;
-		cout << "board[" << fn << "][" << fl << "].color = " << board[fn][fl].color << endl;
-
 		// Check to see if a piece specified by the user is able to move to the inputted coordinates
 		// by calling the canMove() function with the required coordinates on the board piece. 
 		// <<<<<<<<<<<<<<<<Current error>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -306,7 +300,7 @@ char display(Piece board[][8])
 {
 
 	// Clear terminal for easier viewing
-	//system("clear");
+	system("clear");
 
 	// Board compenents
 	string bs = "-";     // Boarder Start
